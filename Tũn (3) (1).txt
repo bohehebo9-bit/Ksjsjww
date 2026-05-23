@@ -2149,3 +2149,100 @@ Tab6:AddToggle({
 })
 
 OrionLib:Init()
+
+
+_G.AutoBeast = false
+_G.AutoFusion = false
+
+-- Auto Beast
+Tab6:AddToggle({
+	Name = "Auto beast",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoBeast = Value
+
+		task.spawn(function()
+			while _G.AutoBeast do
+				local args = {
+					{
+						Camera = CFrame.new(
+							19.41400718688965, 288.5138854980469, 222.8828125,
+							0.9998745322227478, -0.005394831765443087, 0.014898684807121754,
+							0, 0.9402562975883484, 0.3404678702354431,
+							-0.015845347195863724, -0.34042516350746155, 0.9401381611824036
+						),
+						SkillId = "8",
+						["Typе"] = 1,
+						CFrame = CFrame.new(
+							70.45240020751953, 247.81771850585938, -16.98019027709961,
+							1, 0, 0,
+							0, 1, 0,
+							0, 0, 1
+						),
+						Began = true,
+						Aim = Vector3.new(
+							70.45240020751953,
+							247.81771850585938,
+							-66.98019409179688
+						)
+					}
+				}
+
+				game:GetService("ReplicatedStorage")
+					:WaitForChild("Remotes")
+					:WaitForChild("SkillRemote")
+					:FireServer(unpack(args))
+
+				task.wait(5.5)
+			end
+		end)
+	end
+})
+
+-- Auto Fusion
+Tab6:AddToggle({
+	Name = "Auto fusion",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoFusion = Value
+
+		task.spawn(function()
+			while _G.AutoFusion do
+				local args = {
+					{
+						Camera = CFrame.new(
+							48.815589904785156, 334.7337646484375, -64.44622802734375,
+							-0.9099230170249939, 0.3538714647293091, -0.21636807918548584,
+							0, 0.5216489434242249, 0.8531603217124939,
+							0.4147772192955017, 0.7763102054595947, -0.47466033697128296
+						),
+						SkillId = "9",
+						Toggle = true,
+						Began = true,
+						CFrame = CFrame.new(
+							70.45240020751953, 247.81771850585938, -16.98019027709961,
+							1, 0, 0,
+							0, 1, 0,
+							0, 0, 1
+						),
+						["Typе"] = 1,
+						Aim = Vector3.new(
+							70.45240020751953,
+							247.81771850585938,
+							-66.98019409179688
+						)
+					}
+				}
+
+				game:GetService("ReplicatedStorage")
+					:WaitForChild("Remotes")
+					:WaitForChild("SkillRemote")
+					:FireServer(unpack(args))
+
+				task.wait(15)
+			end
+		end)
+	end
+})
+
+OrionLib:Init()
