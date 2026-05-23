@@ -1572,7 +1572,7 @@ Tab5:AddToggle({
                 task.wait()
                 local char = game.Players.LocalPlayer.Character
                 if char and char:FindFirstChild("HumanoidRootPart") then
-                    char.HumanoidRootPart.CFrame = CFrame.new(87.878952, 331.67749, -1493.27832, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+                    char.HumanoidRootPart.CFrame = CFrame.new(70.4524002, 247.817719, -16.9801903, 1, 0, 0, 0, 1, 0, 0, 0, 1)
                     char.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
                 end
             end
@@ -1737,7 +1737,7 @@ end
 -- AUTO DUNGEON
 -- =========================
 Tab5:AddToggle({
-	Name = "Auto Dungeon garriot v2",
+	Name = "Auto Dungeon garriot dont use⚠️",
 	Default = false,
 	Callback = function(Value)
 		getgenv().AutoDungeon = Value
@@ -1836,7 +1836,7 @@ Tab5:AddToggle({
 -- AUTO SURIKEN
 -- =========================
 Tab5:AddToggle({
-	Name = "Auto suriken kill boss",
+	Name = "Auto suriken dont use without a demon race",
 	Default = false,
 	Callback = function(Value)
 		getgenv().AutoSuriken = Value
@@ -2039,3 +2039,159 @@ task.spawn(function()
 		)
 	end
 end)
+
+
+--// AUTO HIT KHI MẤT MÁU
+local AutoSkill = false
+
+Tab6:AddToggle({
+	Name = "Auto Skill Khi Mất Máu",
+	Default = false,
+	Callback = function(Value)
+		AutoSkill = Value
+
+		task.spawn(function()
+			while AutoSkill do
+				pcall(function()
+					local player = game.Players.LocalPlayer
+					local char = workspace:FindFirstChild("Characters")
+						and workspace.Characters:FindFirstChild(player.Name)
+
+					if char and char:FindFirstChild("Humanoid") then
+						local hum = char.Humanoid
+
+						if hum.Health < hum.MaxHealth then
+							local args = {
+								{
+									Camera = CFrame.new(
+										84.84158325195312,
+										335.2990417480469,
+										33.57980728149414,
+										0.9480717182159424,
+										-0.27410775423049927,
+										0.16132274270057678,
+										0,
+										0.5072137713432312,
+										0.8618203997612,
+										-0.31805670261383057,
+										-0.817067563533783,
+										0.48087501525878906
+									),
+									SkillId = "108",
+									["Typ\208\181"] = 1,
+									Began = true,
+									CFrame = CFrame.new(
+										69.14788055419922,
+										248.3054656982422,
+										-13.200387954711914,
+										0.9480716586112976,
+										-0.27410781383514404,
+										0.16132286190986633,
+										2.0518844401351544e-09,
+										0.5072139501571655,
+										0.8618201613426208,
+										-0.3180568516254425,
+										-0.8170672655105591,
+										0.4808751344680786
+									),
+									Target = workspace:WaitForChild("World Map")
+										:WaitForChild("Dungeon")
+										:WaitForChild("Grass")
+										:WaitForChild("Circle.007"),
+									Aim = vector.create(
+										61.08173751831055,
+										205.21446228027344,
+										-37.244144439697266
+									)
+								}
+							}
+
+							game:GetService("ReplicatedStorage")
+								:WaitForChild("Remotes")
+								:WaitForChild("SkillRemote")
+								:FireServer(unpack(args))
+						end
+					end
+				end)
+
+				task.wait(0.1)
+			end
+		end)
+	end
+})
+
+--// AUTO PHÊ PHA V2
+local AutoPhePha = false
+
+Tab7:AddToggle({
+	Name = "Auto Phê Pha V2",
+	Default = false,
+	Callback = function(Value)
+		AutoPhePha = Value
+
+		task.spawn(function()
+			while AutoPhePha do
+				pcall(function()
+					local player = game.Players.LocalPlayer
+					local charFolder = workspace:FindFirstChild("Characters")
+
+					if charFolder then
+						local char = charFolder:FindFirstChild(player.Name)
+
+						if char and not char:FindFirstChild("Mode") then
+							local args = {
+								{
+									Camera = CFrame.new(
+										-28.790475845336914,
+										298.4656677246094,
+										-91.82173156738281,
+										0.8630251884460449,
+										0.06684061139822006,
+										-0.5007192492485046,
+										0,
+										0.9912075996398926,
+										0.1323155164718628,
+										0.5051608085632324,
+										-0.11419162154197693,
+										0.855437159538269
+									),
+									SkillId = "10",
+									Began = true,
+									CFrame = CFrame.new(
+										-20.313318252563477,
+										294.6113586425781,
+										-106.30424499511719,
+										0.863025426864624,
+										0.06684055924415588,
+										-0.5007189512252808,
+										-8.083265612413015e-09,
+										0.9912076592445374,
+										0.1323154717683792,
+										0.5051605105400085,
+										-0.11419161409139633,
+										0.8554373979568481
+									),
+									["Typ\208\181"] = 1,
+									Aim = vector.create(
+										4.722629547119141,
+										287.9955749511719,
+										-149.07611083984375
+									)
+								}
+							}
+
+							game:GetService("ReplicatedStorage")
+								:WaitForChild("Remotes")
+								:WaitForChild("SkillRemote")
+								:FireServer(unpack(args))
+						end
+					end
+				end)
+
+				task.wait(1.5)
+			end
+		end)
+	end
+})
+
+OrionLib:Init()
