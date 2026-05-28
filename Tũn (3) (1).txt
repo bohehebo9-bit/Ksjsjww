@@ -4,7 +4,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Window = OrionLib:MakeWindow({
-	Name = "Dragon Blox V1.4",
+	Name = "Dragon Blox V1.8",
 	HidePremium = false,
 	SaveConfig = true,
 	ConfigFolder = "Config"
@@ -40,6 +40,12 @@ local Tab5 = Window:MakeTab({
 
 local Tab6 = Window:MakeTab({
 	Name = "Setting🥀",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Tab7 = Window:MakeTab({
+	Name = "Dungeons Great 🟣",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
@@ -2246,3 +2252,238 @@ Tab6:AddToggle({
 })
 
 OrionLib:Init()
+
+
+
+
+-- Services
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+
+-- Toggle
+local AutoKill = false
+local AutoLock = false
+local AutoTP = false
+
+-- Position
+local LockCFrame = CFrame.new(
+	1225.3457, 1967.56714, -163.498016,
+	1, 0, 0,
+	0, 1, 0,
+	0, 0, 1
+)
+
+-- Auto Kill Scroid
+Tab7:AddToggle({
+	Name = "Auto kill scroid",
+	Default = false,
+	Callback = function(Value)
+		AutoKill = Value
+
+		task.spawn(function()
+			while AutoKill do
+				local args = {
+					{
+						Camera = CFrame.new(
+							1121.935546875,
+							1995.538330078125,
+							508.5401306152344,
+							-1,0,0,
+							0,0.9659258127212524,0.258819043636322,
+							0,0.258819043636322,-0.9659258127212524
+						),
+
+						SkillId = "101",
+						Began = true,
+
+						CFrame = CFrame.new(
+							1121.935546875,
+							1990.703125,
+							520.6141967773438,
+							-0.9942549467086792,
+							2.9217859243146904e-09,
+							0.10703761130571365,
+							-1.0769481972872086e-09,
+							1,
+							-3.730040987193206e-08,
+							-0.10703761130571365,
+							-3.720139218899021e-08,
+							-0.9942549467086792
+						),
+
+						["Typе"] = 1,
+
+						Aim = vector.create(
+							1116.5836181640625,
+							1990.703125,
+							570.3269653320312
+						)
+					}
+				}
+
+				ReplicatedStorage
+					:WaitForChild("Remotes")
+					:WaitForChild("SkillRemote")
+					:FireServer(unpack(args))
+
+				task.wait(0.00001)
+			end
+		end)
+	end
+})
+
+-- Auto Lock Scroid
+Tab7:AddToggle({
+	Name = "Auto lock Scroid",
+	Default = false,
+	Callback = function(Value)
+		AutoLock = Value
+
+		task.spawn(function()
+			while AutoLock do
+				local mob = workspace
+					:WaitForChild("World Mobs")
+					:WaitForChild("Event Mobs")
+					:FindFirstChild("Great Droid")
+
+				if mob then
+					local args = {mob}
+
+					ReplicatedStorage
+						:WaitForChild("Packages")
+						:WaitForChild("_Index")
+						:WaitForChild("sleitnick_knit@1.4.7")
+						:WaitForChild("knit")
+						:WaitForChild("Services")
+						:WaitForChild("SkillManager")
+						:WaitForChild("RE")
+						:WaitForChild("LockedOnChanged")
+						:FireServer(unpack(args))
+				end
+
+				task.wait(0.1)
+			end
+		end)
+	end
+})
+
+-- Auto TP + Freeze
+Tab7:AddToggle({
+	Name = "Auto TP Lock Position",
+	Default = false,
+	Callback = function(Value)
+		AutoTP = Value
+
+		task.spawn(function()
+			while AutoTP do
+				local Character = LocalPlayer.Character
+				local HRP = Character and Character:FindFirstChild("HumanoidRootPart")
+				local Humanoid = Character and Character:FindFirstChildOfClass("Humanoid")
+
+				if HRP and Humanoid then
+					HRP.CFrame = LockCFrame
+
+					-- Freeze
+					HRP.Velocity = Vector3.zero
+					HRP.AssemblyLinearVelocity = Vector3.zero
+					HRP.AssemblyAngularVelocity = Vector3.zero
+
+					Humanoid.WalkSpeed = 0
+					Humanoid.JumpPower = 0
+					Humanoid.AutoRotate = false
+					Humanoid.PlatformStand = true
+				end
+
+				-- Auto lock
+				local mob = workspace
+					:WaitForChild("World Mobs")
+					:WaitForChild("Event Mobs")
+					:FindFirstChild("Great Droid")
+
+				if mob then
+					local args = {mob}
+
+					ReplicatedStorage
+						:WaitForChild("Packages")
+						:WaitForChild("_Index")
+						:WaitForChild("sleitnick_knit@1.4.7")
+						:WaitForChild("knit")
+						:WaitForChild("Services")
+						:WaitForChild("SkillManager")
+						:WaitForChild("RE")
+						:WaitForChild("LockedOnChanged")
+						:FireServer(unpack(args))
+				end
+
+				task.wait()
+			end
+
+			-- Reset khi tắt
+			local Character = LocalPlayer.Character
+			local Humanoid = Character and Character:FindFirstChildOfClass("Humanoid")
+
+			if Humanoid then
+				Humanoid.WalkSpeed = 16
+				Humanoid.JumpPower = 50
+				Humanoid.AutoRotate = true
+				Humanoid.PlatformStand = false
+			end
+		end)
+	end
+})
+
+OrionLib:Init()
+-- Auto Start
+local AutoStart = false
+local StartedDungeon = false
+
+Tab7:AddToggle({
+	Name = "Auto Start",
+	Default = false,
+	Callback = function(Value)
+		AutoStart = Value
+
+		task.spawn(function()
+			while AutoStart do
+				local mob = workspace
+					:WaitForChild("World Mobs")
+					:WaitForChild("Event Mobs")
+					:FindFirstChild("Great Droid")
+
+				if mob then
+					local humanoid = mob:FindFirstChildOfClass("Humanoid")
+
+					if humanoid then
+						-- Nếu boss chết
+						if humanoid.Health <= 0 and not StartedDungeon then
+							StartedDungeon = true
+
+							task.wait(2)
+
+							pcall(function()
+								game:GetService("ReplicatedStorage")
+									:WaitForChild("Packages")
+									:WaitForChild("_Index")
+									:WaitForChild("sleitnick_knit@1.4.7")
+									:WaitForChild("knit")
+									:WaitForChild("Services")
+									:WaitForChild("DungeonLobbyService")
+									:WaitForChild("RF")
+									:WaitForChild("StartDungeon")
+									:InvokeServer()
+							end)
+						end
+
+						-- Nếu boss hồi full máu => reset để start lần tiếp theo
+						if humanoid.Health >= humanoid.MaxHealth then
+							StartedDungeon = false
+						end
+					end
+				end
+
+				task.wait(2)
+			end
+		end)
+	end
+})
