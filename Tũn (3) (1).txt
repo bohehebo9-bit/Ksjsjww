@@ -2482,7 +2482,7 @@ Tab7:AddToggle({
 					end
 				end
 
-				task.wait(2)
+				task.wait(6.5)
 			end
 		end)
 	end
