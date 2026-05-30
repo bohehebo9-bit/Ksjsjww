@@ -571,7 +571,7 @@ Tab4:AddDropdown({
 
 					task.spawn(function()
 						while getgenv().AutoPlayAgain do
-							task.wait(20)
+							task.wait(4.55)
 
 							local atom = workspace:FindFirstChild("World Mobs")
 							atom = atom and atom:FindFirstChild("Event Mobs")
